@@ -21,6 +21,9 @@ export function subprocessParseReviver(_: string, value: any): any {
   if (value.type === 'test') {
     const test = new Test(value.title, noop);
 
+    // tmp fix https://github.com/mocha-parallel/mocha-parallel-tests/issues/201
+    delete value.fn;
+
     // mimic test.fn as much as we can
     Object.assign(test, value);
     test.fn.toString = () => value.body;

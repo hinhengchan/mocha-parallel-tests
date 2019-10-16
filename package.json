@@ -1,5 +1,5 @@
 {
-  "name": "mocha-parallel-tests",
+  "name": "@henrylalamove/mocha-parallel-tests",
   "version": "2.2.2",
   "homepage": "https://github.com/mocha-parallel/mocha-parallel-tests",
   "description": "Run mocha tests in parallel",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mocha-parallel/mocha-parallel-tests.git"
+    "url": "git://github.com/hinhengchan/mocha-parallel-tests.git"
   },
   "bugs": {
     "url": "https://github.com/mocha-parallel/mocha-parallel-tests/issues"
