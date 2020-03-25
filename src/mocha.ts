@@ -22,3 +22,9 @@ export interface Suite extends MochaSuite, MochaParallelTestsRunnerObject {
 }
 
 export interface Test extends MochaTest, MochaParallelTestsRunnerObject {}
+
+export interface FailedTestError extends Error {
+  showDiff?: boolean;
+  actual: string;
+  expected: string;
+}

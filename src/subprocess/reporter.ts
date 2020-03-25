@@ -1,7 +1,7 @@
 import { IRunner } from 'mocha';
 import CircularJSON from 'circular-json';
 
-import { Test, Suite, Hook } from '../mocha';
+import { Test, Suite, Hook, FailedTestError } from '../mocha';
 import { getMessageId } from './util';
 import { RUNNABLE_MESSAGE_CHANNEL_PROP, SUBPROCESS_RETRIED_SUITE_ID } from '../config';
 import MessageChannel from './message-channel';
@@ -119,12 +119,15 @@ export const getReporterFactory: ReporterFactory = (channel, debugSubprocess) =>
       });
     }
   
-    private onRunnerFail = (test: Test, err: Error) => {
+    private onRunnerFail = (test: Test, err: FailedTestError) => {
       this.notifyParent('fail', {
         err: {
           message: err.message,
           name: err.name,
           stack: err.stack,
+          showDiff: err.showDiff,
+          actual: err.actual,
+          expected: err.expected
         },
         id: test[RUNNABLE_MESSAGE_CHANNEL_PROP],
       });
