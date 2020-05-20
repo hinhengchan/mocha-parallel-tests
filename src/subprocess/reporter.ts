@@ -48,12 +48,12 @@ export const getReporterFactory: ReporterFactory = (channel, debugSubprocess) =>
     }
   
     private onRunnerStart = () => {
-      process.emit('onRunnerStart');
+      (process.emit as Function)('onRunnerStart');
       this.notifyParent('start');
     }
   
     private onRunnerEnd = () => {
-      process.emit('onRunnerEnd');
+      (process.emit as Function)('onRunnerEnd');
       this.notifyParent('end');
     }
   
@@ -62,20 +62,20 @@ export const getReporterFactory: ReporterFactory = (channel, debugSubprocess) =>
       const id = getMessageId('suite', title, this.eventsCounter);
       suite[RUNNABLE_MESSAGE_CHANNEL_PROP] = id;
   
-      process.emit('onRunnerSuTestart', suite);
+      (process.emit as Function)('onRunnerSuTestart', suite);
       this.notifyParent('suite', { id });
       this.eventsCounter += 1;
     }
   
     private onRunnerSuiteEnd = (suite: Suite) => {
-      process.emit('onRunnerSuiteEnd', suite);
+      (process.emit as Function)('onRunnerSuiteEnd', suite);
       this.notifyParent('suite end', {
         id: suite[RUNNABLE_MESSAGE_CHANNEL_PROP],
       });
     }
   
     private onRunnerWaiting = (/* rootSuite: Suite */) => {
-      process.emit('onRunnerWaiting');
+      (process.emit as Function)('onRunnerWaiting');
       this.notifyParent('waiting');
     }
   
@@ -105,7 +105,7 @@ export const getReporterFactory: ReporterFactory = (channel, debugSubprocess) =>
   
       this.runningTests.add(test);
   
-      process.emit('onTestStart', test);
+      (process.emit as Function)('onTestStart', test);
       this.notifyParent('test', { id });
       this.eventsCounter += 1;
     }
@@ -114,21 +114,21 @@ export const getReporterFactory: ReporterFactory = (channel, debugSubprocess) =>
       this.runningTests.delete(test);
       this.currentTestIndex = null;
   
-      process.emit('onTestEnd', test);
+      (process.emit as Function)('onTestEnd', test);
       this.notifyParent('test end', {
         id: test[RUNNABLE_MESSAGE_CHANNEL_PROP],
       });
     }
   
     private onRunnerPass = (test: Test) => {
-      process.emit('onRunnerPass', test);
+      (process.emit as Function)('onRunnerPass', test);
       this.notifyParent('pass', {
         id: test[RUNNABLE_MESSAGE_CHANNEL_PROP],
       });
     }
   
     private onRunnerFail = (test: Test, err: FailedTestError) => {
-      process.emit('onRunnerFail', test, err);
+      (process.emit as Function)('onRunnerFail', test, err);
       this.notifyParent('fail', {
         err: {
           message: err.message,
@@ -143,7 +143,7 @@ export const getReporterFactory: ReporterFactory = (channel, debugSubprocess) =>
     }
   
     private onRunnerPending = (test: Test) => {
-      process.emit('onRunnerPending', test);
+      (process.emit as Function)('onRunnerPending', test);
       this.notifyParent('pending', {
         id: test[RUNNABLE_MESSAGE_CHANNEL_PROP],
       });
@@ -153,13 +153,13 @@ export const getReporterFactory: ReporterFactory = (channel, debugSubprocess) =>
       const id = hook[RUNNABLE_MESSAGE_CHANNEL_PROP] || getMessageId('hook', hook.title, this.eventsCounter);
       hook[RUNNABLE_MESSAGE_CHANNEL_PROP] = id;
   
-      process.emit('onRunnerHookStart', hook);
+      (process.emit as Function)('onRunnerHookStart', hook);
       this.notifyParent('hook', { id });
       this.eventsCounter += 1;
     }
   
     private onRunnerHookEnd = (hook: Hook) => {
-      process.emit('onRunnerHookEnd', hook);
+      (process.emit as Function)('onRunnerHookEnd', hook);
       this.notifyParent('hook end', {
         id: hook[RUNNABLE_MESSAGE_CHANNEL_PROP],
       });
